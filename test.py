@@ -48,7 +48,7 @@ pdf_html = HTML(string=html).render()
 
 
 target = 'forms.pdf'
-form_finisher = FormFinisher()
+form_finisher = FormFinisher(inject_empty_cryptographic_signature=True)
 pdf_html.write_pdf(finisher=form_finisher)
 
 form_finisher.write_pdf(target)

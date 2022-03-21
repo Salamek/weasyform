@@ -11,7 +11,9 @@ from weasyprint.formatting_structure import boxes
 
 
 class Page(WPPage):
-    form_elements = []
+    def __init__(self, page_box):
+        self.form_elements = []
+        super(Page, self).__init__(page_box)
 
     def _gather_links_and_bookmarks(self, box, parent_matrix=None):
 
