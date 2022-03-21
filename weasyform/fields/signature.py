@@ -143,7 +143,7 @@ class Signature:
             signature_field_name: str,
             on_page_number: int = 0,
             signature_box: Tuple[int, int, int, int] = None,
-            is_signature_visible: bool = True,
+            is_signature_visible: bool = False,
             signature_field_has_to_exists: bool = False
     ) -> pydyf.Dictionary:
         signature = Signature(
