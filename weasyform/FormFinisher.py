@@ -1,5 +1,5 @@
 import pydyf
-
+from typing import Callable
 from .WeasyForm import WeasyForm
 from weasyform import Document
 from weasyprint.document import Matrix
@@ -9,9 +9,9 @@ from .fields.signature import Signature
 
 
 class FormFinisher:
+    weasy_form = None
 
-    def __init__(self, target: str = None, inject_empty_cryptographic_signature: bool = False):
-        self.target = target
+    def __init__(self, inject_empty_cryptographic_signature: bool = False):
         self.inject_empty_cryptographic_signature = inject_empty_cryptographic_signature
 
     def __call__(self, pdf_document: Document, pdf: pydyf.PDF):
@@ -40,4 +40,15 @@ class FormFinisher:
                             'V': form_signature.reference
                         })
 
-        weasy_form.write(self.target)
+        self.weasy_form = weasy_form
+
+    def get_buffer(self) -> bytes:
+        if not self.weasy_form:
+            raise Exception('weasy_form is not set!')
+        return self.weasy_form.write()
+
+    def write_pdf(self, target: str) -> None:
+        if not self.weasy_form:
+            raise Exception('weasy_form is not set!')
+        self.weasy_form.write(target)
+

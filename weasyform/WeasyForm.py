@@ -76,7 +76,7 @@ class WeasyForm:
 
         return form_signature
 
-    def write(self, target: str):
+    def write(self, target: str = None):
         file_obj = io.BytesIO()
         self.pdf.write(file_obj)
         if target is None:

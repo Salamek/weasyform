@@ -48,6 +48,10 @@ pdf_html = HTML(string=html).render()
 
 
 target = 'forms.pdf'
-pdf_html.write_pdf(finisher=FormFinisher(target=target))
+form_finisher = FormFinisher()
+pdf_html.write_pdf(finisher=form_finisher)
+
+form_finisher.write_pdf(target)
+
 
 
