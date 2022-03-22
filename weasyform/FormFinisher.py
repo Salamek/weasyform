@@ -9,8 +9,6 @@ from .fields.signature import Signature
 
 
 class FormFinisher:
-    weasy_form = None
-
     def __init__(self, inject_empty_cryptographic_signature: bool = False):
         self.inject_empty_cryptographic_signature = inject_empty_cryptographic_signature
 
@@ -39,16 +37,4 @@ class FormFinisher:
                         signature.update({
                             'V': form_signature.reference
                         })
-
-        self.weasy_form = weasy_form
-
-    def get_buffer(self) -> bytes:
-        if not self.weasy_form:
-            raise Exception('weasy_form is not set!')
-        return self.weasy_form.write()
-
-    def write_pdf(self, target: str) -> None:
-        if not self.weasy_form:
-            raise Exception('weasy_form is not set!')
-        self.weasy_form.write(target)
 
