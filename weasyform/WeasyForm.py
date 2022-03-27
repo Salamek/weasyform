@@ -49,7 +49,7 @@ class WeasyForm:
     def register_annotation(self, page_object: pydyf.Dictionary, annotation_object: pydyf.Dictionary) -> None:
         found_annots = page_object.get('Annots')
         if found_annots:
-            found_annots.extend(annotation_object.reference)
+            found_annots.extend(pydyf.Array([annotation_object.reference]))
         else:
             annots = pydyf.Dictionary({
                 'Annots': pydyf.Array([annotation_object.reference])

@@ -90,11 +90,13 @@ class Signature:
 
         return signature_field
 
-    def set_signature_flags(self, flag: int = 3):
+    def ensure_sig_flags(self):
         acro_form = self.signer_pdf.catalog.get('AcroForm')
-        acro_form.update(pydyf.Dictionary({
-            'SigFlags': flag
-        }))
+
+        if not acro_form.get('SigFlags'):
+            acro_form.update(pydyf.Dictionary({
+                'SigFlags': 1
+            }))
 
     def create_visible_signature_box(self, signature_field: pydyf.Dictionary, display: bool = True):
         llx, lly, urx, ury = self.signature_box
@@ -154,7 +156,7 @@ class Signature:
         )
 
         signature_field = signature.create_signature_field(signature_field_has_to_exists)
-        signature.set_signature_flags()
+        signature.ensure_sig_flags()
 
         if signature_box:
             signature.create_visible_signature_box(signature_field, is_signature_visible)

@@ -24,7 +24,6 @@ class FormFinisher:
                     matrix = Matrix(scale, 0, 0, -scale, 0, page.height * scale)
                     x1, y1 = matrix.transform_point(*rectangle[:2])
                     x2, y2 = matrix.transform_point(*rectangle[2:])
-
                     signature = Signature.add_field(
                         weasy_form,
                         signature_field_name=element_name,
