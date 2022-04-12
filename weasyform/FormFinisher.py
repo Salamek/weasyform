@@ -15,7 +15,7 @@ class FormFinisher:
     def __call__(self, pdf_document: Document, pdf: pydyf.PDF):
         weasy_form = WeasyForm(pdf)
 
-        for page in pdf_document.pages:
+        for page_number, page in enumerate(pdf_document.pages):
             for form_element in page.form_elements:
                 element_type, element_name, rectangle = form_element
                 if element_type == 'signature':
@@ -27,7 +27,8 @@ class FormFinisher:
                     signature = Signature.add_field(
                         weasy_form,
                         signature_field_name=element_name,
-                        signature_box=(x1, y1, x2, y2)
+                        signature_box=(x1, y1, x2, y2),
+                        on_page_number=page_number
                     )
 
                     if self.inject_empty_cryptographic_signature:
