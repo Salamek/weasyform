@@ -1,6 +1,5 @@
 from weasyform.FormFinisher import FormFinisher
-from weasyform import HTML
-
+from weasyprint import HTML
 html = """
 <style>
 table {
@@ -17,6 +16,11 @@ input {
     height: 20px;
 }
 
+input, textarea, select {
+  display: block;
+  appearance: auto;
+}
+
 </style>
 <h1>TEST</h1>
 <table>
@@ -30,7 +34,7 @@ input {
     <th>Signature</th><td><input type="signature" name="testSignature" style="width: 100% height: 20px"></td>
 </tr>
 <tr>
-    <th>Input text</th><td><input name="testText" type="text"></td>
+    <th>Input text</th><td><input name="testText" type="text" value="value"/></td>
 </tr>
 <tr>
     <th>Input number</th><td><input name="testNumber" type="number"></td>
@@ -44,14 +48,12 @@ input {
 </table>
 """
 
+
 pdf_html = HTML(string=html).render()
 
 
 target = 'forms.pdf'
-form_finisher = FormFinisher(inject_empty_cryptographic_signature=True)
-pdf_html.write_pdf(finisher=form_finisher)
-
-form_finisher.write_pdf(target)
-
+form_finisher = FormFinisher(inject_empty_cryptographic_signature=False, is_signature_visible=False)
+pdf_html.write_pdf(finisher=form_finisher, target=target)
 
 

@@ -8,10 +8,10 @@ def read_readme() -> str:
 
 setup(
     name='weasyform',
-    version='0.0.6',
+    version='0.0.7',
     packages=find_packages(exclude=['tests', 'tests.*']),
     install_requires=[
-        'WeasyPrint'
+        'WeasyPrint>=61.0'
     ],
 
     url='https://github.com/Salamek/weasyform',
