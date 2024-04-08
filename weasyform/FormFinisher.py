@@ -113,7 +113,7 @@ class FormFinisher:
         if not found_element:
             raise ValueError('Input with name {} not found'.format(input_name))
         found_element['FT'] = '/Sig'
-        found_element['F'] = 132,
+        found_element['F'] = 132
         found_element['T'] = pydyf.String(input_name)  #!FIXME we have to override name since weasyprint doublepacks T in pydyf.String -> pydyf.String
         if self.inject_empty_cryptographic_signature:
             found_element['V'] = self._append_empty_cryptographic_signature(pdf).reference
