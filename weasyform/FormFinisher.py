@@ -59,13 +59,19 @@ class FormFinisher:
 
         return form_signature
 
-    def _ensure_sig_flags(self, pdf: pydyf.PDF):
+    def _ensure_sig_flags(self, pdf: pydyf.PDF) -> None:
         acro_form = pdf.catalog.get('AcroForm')
 
         if not acro_form.get('SigFlags'):
             acro_form.update(pydyf.Dictionary({
                 'SigFlags': 1
             }))
+
+    def _ensure_need_appearances_removed(self, pdf: pydyf.PDF) -> None:
+        acro_form = pdf.catalog.get('AcroForm')
+        need_appearances = acro_form.get('NeedAppearances')
+        if need_appearances:
+            del acro_form['NeedAppearances']
 
     def _create_visible_signature_box(self, pdf: pydyf.PDF, signature_field: pydyf.Dictionary, display: bool = True):
         llx, lly, urx, ury = signature_field['Rect']
@@ -161,3 +167,4 @@ class FormFinisher:
 
         if found_signature_field:
             self._ensure_sig_flags(pdf)
+            self._ensure_need_appearances_removed(pdf)
