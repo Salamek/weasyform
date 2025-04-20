@@ -156,14 +156,23 @@ class FormFinisher:
         }
         """
 
-    def __call__(self, pdf_document: weasyprint.Document, pdf: pydyf.PDF):
+    def __call__(self, pdf_document: weasyprint.Document, pdf: pydyf.PDF) -> None:
         found_signature_field = False
         for page_number, page in enumerate(pdf_document.pages):
-            for element, style, rectangle in page.inputs:
-                if element.attrib.get('type') == 'signature':
-                    input_name = element.attrib.get('name')
-                    self.override_field(pdf, input_name)
-                    found_signature_field = True
+            if hasattr(page, 'inputs'):
+                # Compability with old WeasyPrint versions
+                for element, style, rectangle in page.inputs:
+                    if element.attrib.get('type') == 'signature':
+                        input_name = element.attrib.get('name')
+                        self.override_field(pdf, input_name)
+                        found_signature_field = True
+            else:
+                for _form, inputs in page.forms.items():
+                    for element, style, rectangle in inputs:
+                        if element.attrib.get('type') == 'signature':
+                            input_name = element.attrib.get('name')
+                            self.override_field(pdf, input_name)
+                            found_signature_field = True
 
         if found_signature_field:
             self._ensure_sig_flags(pdf)
