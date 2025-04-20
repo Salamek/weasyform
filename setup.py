@@ -8,7 +8,7 @@ def read_readme() -> str:
 
 setup(
     name='weasyform',
-    version='0.0.8',
+    version='0.0.10',
     packages=find_packages(exclude=['tests', 'tests.*']),
     install_requires=[
         'WeasyPrint>=61.0'
